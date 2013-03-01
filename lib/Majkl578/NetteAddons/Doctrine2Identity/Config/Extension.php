@@ -23,8 +23,9 @@ class Extension extends CompilerExtension
 
 	public static function register(Configurator $configurator)
 	{
-		$configurator->onCompile[] = function (Configurator $sender, Compiler $compiler) {
-			$compiler->addExtension(self::NAME, new static());
+		$name = self::NAME;
+		$configurator->onCompile[] = function (Configurator $sender, Compiler $compiler) use ($name) {
+			$compiler->addExtension($name, new Extension());
 		};
 	}
 }
