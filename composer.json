@@ -1,0 +1,22 @@
+{
+	"name": "majkl578/nette-identity-doctrine",
+	"type": "nette-addon",
+	"keywords": ["nette", "doctrine", "security", "identity"],
+	"authors": [
+		{
+			"name": "Michael Moravec"
+		}
+	],
+	"description": "Integration of entities implementing IIdentity in Nette 2",
+	"license": "MIT",
+	"require": {
+		"php": ">=5.3.2",
+		"nette/nette": "2.0.*",
+		"doctrine/orm": "2.3.*"
+	},
+	"autoload": {
+		"psr-0": {
+			"Majkl578\\NetteAddons\\Doctrine2Identity": "lib/"
+		}
+	}
+}
