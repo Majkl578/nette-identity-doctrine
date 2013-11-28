@@ -1,6 +1,6 @@
 <?php
 
-namespace Majkl578\NetteAddons\Doctrine2Identity\Config;
+namespace Majkl578\NetteAddons\Doctrine2Identity\DI;
 
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
@@ -21,7 +21,7 @@ if (isset(NetteLoader::getInstance()->renamed['Nette\Configurator']) || !class_e
 /**
  * @author Michael Moravec
  */
-class Extension extends CompilerExtension
+class IdentityExtension extends CompilerExtension
 {
 	const NAME = 'doctrine2identity';
 
@@ -37,7 +37,7 @@ class Extension extends CompilerExtension
 	{
 		$name = self::NAME;
 		$configurator->onCompile[] = function (Configurator $sender, Compiler $compiler) use ($name) {
-			$compiler->addExtension($name, new Extension());
+			$compiler->addExtension($name, new IdentityExtension());
 		};
 	}
 }
