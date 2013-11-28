@@ -1,7 +1,7 @@
 {
 	"name": "majkl578/nette-identity-doctrine",
 	"type": "nette-addon",
-	"keywords": ["nette", "doctrine", "security", "identity"],
+	"keywords": ["nette", "doctrine", "orm", "security", "identity", "authentication"],
 	"authors": [
 		{
 			"name": "Michael Moravec"
