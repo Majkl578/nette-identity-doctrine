@@ -16,7 +16,7 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"Majkl578\\NetteAddons\\Doctrine2Identity": "lib/"
+			"Majkl578\\NetteAddons\\Doctrine2Identity\\": "lib/"
 		}
 	}
 }
