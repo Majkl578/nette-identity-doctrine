@@ -35,9 +35,8 @@ class IdentityExtension extends CompilerExtension
 
 	public static function register(Configurator $configurator)
 	{
-		$name = self::NAME;
-		$configurator->onCompile[] = function (Configurator $sender, Compiler $compiler) use ($name) {
-			$compiler->addExtension($name, new IdentityExtension());
+		$configurator->onCompile[] = function (Configurator $sender, Compiler $compiler) {
+			$compiler->addExtension(IdentityExtension::NAME, new IdentityExtension());
 		};
 	}
 }
