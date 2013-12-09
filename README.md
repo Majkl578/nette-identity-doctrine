@@ -28,14 +28,13 @@ Don't forget to run `composer update`.
 2. Register extension to start using this addon.
     1. In Nette 2.0, add the following call just before the call `$configurator->createContainer()`:
     ```php
-    Majkl578\NetteAddons\Doctrine2Identity\Config\Extension::register($configurator);
+    Majkl578\NetteAddons\Doctrine2Identity\DI\IdentityExtension::register($configurator);
     ```
 
-    2. In Nette 2.1, register it in your configuration file:
-	```
-    extensions:
-	    doctrine2identity: Majkl578\NetteAddons\Doctrine2Identity\DI\IdentityExtension
-	```
+    2. In Nette 2.1, register it in your configuration file in extensions section:
+    ```
+    doctrine2identity: Majkl578\NetteAddons\Doctrine2Identity\DI\IdentityExtension
+    ```
 
 3. Delete cache.
 
