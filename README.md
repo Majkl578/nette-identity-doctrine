@@ -16,8 +16,8 @@ Requirements
 ------
 
 - PHP 5.3.2 or newer
-- Nette 2.0
-- Doctrine ORM 2.3
+- Nette 2.0 or newer
+- Doctrine ORM 2.3 or newer
 
 
 Installation
@@ -25,12 +25,17 @@ Installation
 
 1. Add "`majkl578/nette-identity-doctrine`" to your dependencies in composer.json.
 Don't forget to run `composer update`.
-2. Register extension to start using this addon. Add the following call just before
-the call `$configurator->createContainer()`:
+2. Register extension to start using this addon.
+    1. In Nette 2.0, add the following call just before the call `$configurator->createContainer()`:
+    ```php
+    Majkl578\NetteAddons\Doctrine2Identity\Config\Extension::register($configurator);
+    ```
 
-```php
-Majkl578\NetteAddons\Doctrine2Identity\Config\Extension::register($configurator);
-```
+    2. In Nette 2.1, register it in your configuration file:
+	```
+    extensions:
+	    doctrine2identity: Majkl578\NetteAddons\Doctrine2Identity\DI\IdentityExtension
+	```
 
 3. Delete cache.
 
@@ -52,7 +57,10 @@ so you get something like this:
  */
 class UserEntity implements IIdentity
 {
+	/** @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue */
 	private $id;
+
+	/** @ORM\Column
 	private $name;
 
 	... other properties, getters & setters
@@ -65,13 +73,13 @@ class UserEntity implements IIdentity
 
 	public function getRoles()
 	{
-		return array();
+		return [];
 	}
 }
 ```
 
 (Notice the empty getRoles() method. That is due to the requirement of IIdentity.
-Unfortunately, it can't be omitted, but you can create for example a trait for that.)
+If you don't use authorization, unfortunately, it can't be omitted, sorry.)
 
 That's all. Everything is automatic!
 And you can even use entities with composite identifiers!
