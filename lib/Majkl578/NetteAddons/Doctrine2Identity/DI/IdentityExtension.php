@@ -32,8 +32,10 @@ class IdentityExtension extends CompilerExtension
 		$defaultUserStorageDefinition = $builder->getDefinition('nette.userStorage');
 		$builder->removeDefinition('nette.userStorage');
 
-		$builder->addDefinition($this->prefix('defaultUserStorage'), $defaultUserStorageDefinition)
-			->setAutowired(false);
+		if(!$builder->hasDefinition($this->prefix('defaultUserStorage'))) {
+			$builder->addDefinition($this->prefix('defaultUserStorage'), $defaultUserStorageDefinition);
+		}
+		$builder->getDefinition($this->prefix('defaultUserStorage'))->setAutowired(false);
 
 		$builder->addDefinition('nette.userStorage')
 			->setClass('Majkl578\NetteAddons\Doctrine2Identity\Http\UserStorage', array('@' . $this->prefix('defaultUserStorage')));
