@@ -4,22 +4,23 @@ namespace Majkl578\NetteAddons\Doctrine2Identity\Http;
 
 use Doctrine\ORM\EntityManager;
 use Majkl578\NetteAddons\Doctrine2Identity\Security\FakeIdentity;
-use Nette\Http\Session;
-use Nette\Http\UserStorage as NetteUserStorage;
+use Nette\Object;
+use Nette\Security\IUserStorage;
 use Nette\Security\IIdentity;
 
 /**
  * @author Michael Moravec
  */
-class UserStorage extends NetteUserStorage
+class UserStorage extends Object implements IUserStorage
 {
+	/** @var IUserStorage */
+	private $userStorage;
+
 	/** @var EntityManager */
 	private $entityManager;
 
-	public function  __construct(Session $sessionHandler, EntityManager $entityManager)
-	{
-		parent::__construct($sessionHandler);
-
+	public function  __construct(IUserStorage $userStorage, EntityManager $entityManager) {
+		$this->userStorage = $userStorage;
 		$this->entityManager = $entityManager;
 	}
 
@@ -43,7 +44,7 @@ class UserStorage extends NetteUserStorage
 			}
 		}
 
-		return parent::setIdentity($identity);
+		return $this->userStorage->setIdentity($identity);
 	}
 
 	/**
@@ -52,7 +53,7 @@ class UserStorage extends NetteUserStorage
 	 */
 	public function getIdentity()
 	{
-		$identity = parent::getIdentity();
+		$identity = $this->userStorage->getIdentity();
 
 		// if we have our fake identity, we now want to
 		// convert it back into the real entity
@@ -62,5 +63,44 @@ class UserStorage extends NetteUserStorage
 		}
 
 		return $identity;
+	}
+
+	/**
+	 * Sets the authenticated status of this user.
+	 * @param  bool
+	 * @return void
+	 */
+	function setAuthenticated($state)
+	{
+		return $this->userStorage->setAuthenticated($state);
+	}
+
+	/**
+	 * Is this user authenticated?
+	 * @return bool
+	 */
+	function isAuthenticated()
+	{
+		return $this->userStorage->isAuthenticated();
+	}
+
+	/**
+	 * Enables log out from the persistent storage after inactivity.
+	 * @param  string|int|DateTime number of seconds or timestamp
+	 * @param  int Log out when the browser is closed | Clear the identity from persistent storage?
+	 * @return void
+	 */
+	function setExpiration($time, $flags = 0)
+	{
+		return $this->userStorage->setExpiration($time, $flags);
+	}
+
+	/**
+	 * Why was user logged out?
+	 * @return int
+	 */
+	function getLogoutReason()
+	{
+		return $this->userStorage->getLogoutReason();
 	}
 }
