@@ -4,28 +4,29 @@ namespace Majkl578\NetteAddons\Doctrine2Identity\Http;
 
 use Doctrine\ORM\EntityManager;
 use Majkl578\NetteAddons\Doctrine2Identity\Security\FakeIdentity;
-use Nette\Http\Session;
-use Nette\Http\UserStorage as NetteUserStorage;
+use Nette\Object;
 use Nette\Security\IIdentity;
+use Nette\Security\IUserStorage;
 
 /**
  * @author Michael Moravec
  */
-class UserStorage extends NetteUserStorage
+class UserStorage extends Object implements IUserStorage
 {
+	/** @var IUserStorage */
+	private $userStorage;
+
 	/** @var EntityManager */
 	private $entityManager;
 
-	public function  __construct(Session $sessionHandler, EntityManager $entityManager)
+	public function  __construct(IUserStorage $userStorage, EntityManager $entityManager)
 	{
-		parent::__construct($sessionHandler);
-
+		$this->userStorage = $userStorage;
 		$this->entityManager = $entityManager;
 	}
 
 	/**
-	 * Sets the user identity.
-	 * @return UserStorage Provides a fluent interface
+	 * {@inheritdoc}
 	 */
 	public function setIdentity(IIdentity $identity = NULL)
 	{
@@ -43,16 +44,15 @@ class UserStorage extends NetteUserStorage
 			}
 		}
 
-		return parent::setIdentity($identity);
+		return $this->userStorage->setIdentity($identity);
 	}
 
 	/**
-	 * Returns current user identity, if any.
-	 * @return IIdentity|NULL
+	 * {@inheritdoc}
 	 */
 	public function getIdentity()
 	{
-		$identity = parent::getIdentity();
+		$identity = $this->userStorage->getIdentity();
 
 		// if we have our fake identity, we now want to
 		// convert it back into the real entity
@@ -62,5 +62,75 @@ class UserStorage extends NetteUserStorage
 		}
 
 		return $identity;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setAuthenticated($state)
+	{
+		return $this->userStorage->setAuthenticated($state);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isAuthenticated()
+	{
+		return $this->userStorage->isAuthenticated();
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setExpiration($time, $flags = 0)
+	{
+		return $this->userStorage->setExpiration($time, $flags);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getLogoutReason()
+	{
+		return $this->userStorage->getLogoutReason();
+	}
+
+	/**
+	 * @return IUserStorage original storage which is being decorated
+	 */
+	public function getInnerStorage()
+	{
+		return $this->userStorage;
+	}
+
+	/*** Nette\Http\UserStorage compliance - because Nette is fucked up and does not follow interfaces ***/
+
+	/**
+	 * Changes namespace; allows more users to share a session.
+	 * @param  string
+	 * @return self
+	 */
+	public function setNamespace($namespace)
+	{
+		if (!method_exists($this->userStorage, 'setNamespace')) {
+			throw new \BadMethodCallException('Inner storage of type ' . get_class($this) . ' does not have setNamespace method.');
+		}
+
+		return $this->userStorage->setNamespace($namespace);
+	}
+
+
+	/**
+	 * Returns current namespace.
+	 * @return string
+	 */
+	public function getNamespace()
+	{
+		if (!method_exists($this->userStorage, 'getNamespace')) {
+			throw new \BadMethodCallException('Inner storage of type ' . get_class($this) . ' does not have getNamespace method.');
+		}
+
+		return $this->userStorage->getNamespace();
 	}
 }

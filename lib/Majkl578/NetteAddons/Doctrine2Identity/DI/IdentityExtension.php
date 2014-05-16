@@ -25,12 +25,20 @@ class IdentityExtension extends CompilerExtension
 {
 	const NAME = 'doctrine2identity';
 
-	public function loadConfiguration()
+	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->getDefinition('nette.userStorage')
-			->setClass('Majkl578\NetteAddons\Doctrine2Identity\Http\UserStorage');
+		$originalStorage = $builder->getDefinition('nette.userStorage');
+		$decoratorStorage = clone $originalStorage;
+
+		// original storage replaced by our own storage, but is kept as different service
+		$builder->addDefinition($this->prefix('originalUserStorage'), $originalStorage)
+			->setAutowired(FALSE);
+
+		$builder->removeDefinition('nette.userStorage');
+		$builder->addDefinition('nette.userStorage', $decoratorStorage)
+			->setClass('Majkl578\NetteAddons\Doctrine2Identity\Http\UserStorage', array('@' . $this->prefix('originalUserStorage')));
 	}
 
 	public static function register(Configurator $configurator)
