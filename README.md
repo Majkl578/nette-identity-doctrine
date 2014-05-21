@@ -59,7 +59,7 @@ class UserEntity implements IIdentity
 	/** @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue */
 	private $id;
 
-	/** @ORM\Column
+	/** @ORM\Column */
 	private $name;
 
 	... other properties, getters & setters
