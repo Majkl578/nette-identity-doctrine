@@ -28,9 +28,8 @@ class IdentityExtension extends CompilerExtension
 	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
-		$builder->removeDefinition($builder->getByType('Nette\Security\IUserStorage') ?: 'nette.userStorage');
-		$builder->addDefinition($builder->getByType('Nette\Security\IUserStorage') ?: 'nette.userStorage')
-			->setClass('Majkl578\NetteAddons\Doctrine2Identity\Http\UserStorage');
+		$builder->getDefinition('security.userStorage')
+			->setFactory('Majkl578\NetteAddons\Doctrine2Identity\Http\UserStorage');
 	}
 
 	public static function register(Configurator $configurator)
