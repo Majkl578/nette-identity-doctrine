@@ -11,12 +11,10 @@ class DatabaseLoader
 	/** @var bool */
 	private $isDbPrepared = FALSE;
 
-	/** @var Connegction */
+	/** @var Connection */
 	private $connection;
 
-	/**
-	 * @var EntityManager
-	 */
+	/** @var EntityManager */
 	private $entityManager;
 
 	public function __construct(Connection $connection, EntityManager $entityManager)

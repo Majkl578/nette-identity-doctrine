@@ -24,7 +24,9 @@ class User implements IIdentity
 	 */
 	private $name;
 
-	/** @param string $name */
+	/**
+	 * @param string $name
+	 */
 	public function __construct($name)
 	{
 		$this->name = $name;

@@ -1,7 +1,3 @@
-nette:
-	session:
-		autoStart: true
-
 services:
 	- Majkl578\NetteAddons\Doctrine2Identity\Tests\DatabaseLoader
 
