@@ -18,7 +18,7 @@ matrix:
     - php: 7.0
 
 install:
-  - sh -c 'if [ "$NETTE_VERSION" != "" ]; then composer require --no-update symfony/symfony=$NETTE_VERSION; fi;'
+  - sh -c 'if [ "$NETTE_VERSION" != "" ]; then composer require --no-update nette/nette=$NETTE_VERSION; fi;'
   - composer install --prefer-source
 
 script:
