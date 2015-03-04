@@ -14,9 +14,9 @@ matrix:
     - php: hhvm
   include:
     - php: 5.6
-      evn: NETTE_VERSION='2.1.*'
+      env: NETTE_VERSION='2.1.*'
     - php: 5.6
-      evn: NETTE_VERSION='2.2.*'
+      env: NETTE_VERSION='2.2.*'
 
 
 before_script:
