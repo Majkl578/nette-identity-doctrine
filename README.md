@@ -3,8 +3,7 @@
 Nette addon for using Doctrine 2 entities directly as Nette identity
 
 
-Motivation
-------
+## Motivation
 
 If you are using Nette 2 and Doctrine 2 together, you will sooner or later
 want to use some of your entities also as identity, because it is practical.
@@ -12,28 +11,23 @@ want to use some of your entities also as identity, because it is practical.
 Fortunately, this addon is here to help you with this task!
 
 
-Requirements
-------
+## Requirements
 
-- PHP 5.3.2 or newer
-- Nette 2.0 or newer
-- Doctrine ORM 2.3 or newer
+- PHP 5.3.2+
+- Nette 2.1+
+- Doctrine ORM 2.3+
 
 
-Installation
-------
+## Installation
 
-1. Add "`majkl578/nette-identity-doctrine`" to your dependencies in composer.json.
-Don't forget to run `composer update`.
-2. Register extension to start using this addon.
-    1. In Nette 2.0, add the following call just before the call `$configurator->createContainer()`:
-    ```php
-    Majkl578\NetteAddons\Doctrine2Identity\DI\IdentityExtension::register($configurator);
-    ```
+1. Install via composer:
 
-    2. In Nette 2.1, register it in your configuration file in extensions section:
-    ```
-    doctrine2identity: Majkl578\NetteAddons\Doctrine2Identity\DI\IdentityExtension
+   `composer require majkl578/nette-identity-doctrine`
+
+2. Register extension in your configuration file in extensions section:
+    ```yaml
+    extensions:
+        doctrine2identity: Majkl578\NetteAddons\Doctrine2Identity\DI\IdentityExtension
     ```
 
 3. Delete cache.
@@ -41,8 +35,7 @@ Don't forget to run `composer update`.
 You're done. ;)
 
 
-Usage
-------
+## Usage
 
 Imagine you have an application where you're implementing authentication.
 All you have is a regular entity for the user in your application.
@@ -51,6 +44,8 @@ The only thing you have to do is to implement `Nette\Security\IIdentity` on your
 so you get something like this:
 
 ```php
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity
  */
@@ -72,7 +67,7 @@ class UserEntity implements IIdentity
 
 	public function getRoles()
 	{
-		return [];
+		return array();
 	}
 }
 ```
@@ -84,7 +79,6 @@ That's all. Everything is automatic!
 And you can even use entities with composite identifiers!
 
 
-Issues
-------
+## Issues
 
 In case of any problems, just leave an issue here on GitHub (or, better, send a pull request).

@@ -2,9 +2,9 @@
 
 namespace Majkl578\NetteAddons\Doctrine2Identity\DI;
 
+use Nette\Configurator;
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
-use Nette\Configurator;
 use Nette\Loaders\NetteLoader;
 
 // Nette 2.0 & 2.1 compatibility, thx @HosipLan
@@ -25,12 +25,13 @@ class IdentityExtension extends CompilerExtension
 {
 	const NAME = 'doctrine2identity';
 
-	public function loadConfiguration()
+	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->getDefinition('nette.userStorage')
-			->setClass('Majkl578\NetteAddons\Doctrine2Identity\Http\UserStorage');
+		$userStorageDefinitionName = $builder->getByType('Nette\Security\IUserStorage') ?: 'nette.userStorage';
+		$builder->getDefinition($userStorageDefinitionName)
+			->setFactory('Majkl578\NetteAddons\Doctrine2Identity\Http\UserStorage');
 	}
 
 	public static function register(Configurator $configurator)
