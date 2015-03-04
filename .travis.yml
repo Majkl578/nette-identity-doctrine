@@ -16,6 +16,7 @@ matrix:
       evn: NETTE_VERSION=2.2.*
   allow_failures:
     - php: 7.0
+    - php: hhvm
 
 install:
   - sh -c 'if [ "$NETTE_VERSION" != "" ]; then composer require --no-update nette/nette=$NETTE_VERSION; fi;'
