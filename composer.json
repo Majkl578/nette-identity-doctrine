@@ -1,5 +1,5 @@
 {
-	"name": "majkl578/nette-identity-doctrine",
+	"name": "rhrebecek/nette-identity-doctrine",
 	"type": "nette-addon",
 	"keywords": ["nette", "doctrine", "orm", "security", "identity", "authentication"],
 	"authors": [
