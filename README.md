@@ -16,7 +16,7 @@ Requirements
 ------
 
 - PHP 5.3.2 or newer
-- Nette 2.0 or newer
+- Nette 2.1 or newer
 - Doctrine ORM 2.3 or newer
 
 
