@@ -15,8 +15,8 @@
 		"doctrine/orm": "~2.3"
 	},
 	"autoload": {
-		"psr-0": {
-			"Majkl578\\NetteAddons\\Doctrine2Identity\\": "lib/"
+		"psr-4": {
+			"Majkl578\\NetteAddons\\Doctrine2Identity\\": "lib"
 		}
 	}
 }
