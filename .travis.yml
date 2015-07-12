@@ -1,5 +1,7 @@
 language: php
 
+sudo: false
+
 php:
   - 5.3
   - 5.4
@@ -21,7 +23,7 @@ matrix:
 
 before_script:
   - sh -c 'if [ "$NETTE_VERSION" != "" ]; then composer require --no-update nette/nette=$NETTE_VERSION; fi;'
-  - composer install --prefer-source
+  - travis_retry composer install --prefer-source
 
 script:
   - phpunit
