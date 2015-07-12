@@ -14,9 +14,17 @@
 		"nette/nette": "~2.1",
 		"doctrine/orm": "~2.3"
 	},
+	"require-dev": {
+		"kdyby/doctrine": "~2.0"
+	},
 	"autoload": {
 		"psr-4": {
 			"Majkl578\\NetteAddons\\Doctrine2Identity\\": "lib"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Majkl578\\NetteAddons\\Doctrine2Identity\\Tests\\": "tests"
 		}
 	}
 }
