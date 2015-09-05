@@ -14,7 +14,7 @@ Fortunately, this addon is here to help you with this task!
 ## Requirements
 
 - PHP 5.3.2+
-- Nette 2.1+
+- Nette 2.2+
 - Doctrine ORM 2.3+
 
 
