@@ -15,7 +15,8 @@
 		"doctrine/orm": "~2.3"
 	},
 	"require-dev": {
-		"kdyby/doctrine": "~2.0"
+		"kdyby/doctrine": "~2.0",
+		"phpunit/phpunit": "~4.8"
 	},
 	"autoload": {
 		"psr-4": {
