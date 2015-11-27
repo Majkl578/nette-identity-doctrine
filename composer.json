@@ -11,11 +11,19 @@
 	"license": "MIT",
 	"require": {
 		"php": ">=5.3.2",
-		"nette/nette": "~2.1",
+		"nette/di": "~2.2",
+		"nette/http": "~2.2",
+		"nette/security": "~2.2",
 		"doctrine/orm": "~2.3"
 	},
 	"require-dev": {
-		"kdyby/doctrine": "~2.0"
+		"nette/bootstrap": "~2.2",
+		"kdyby/doctrine": "~2.0",
+		"tracy/tracy": "~2.2",
+		"phpunit/phpunit": "~4.8"
+	},
+	"suggests": {
+		"nette/bootstrap": "To use IdentityExtension::register()."
 	},
 	"autoload": {
 		"psr-4": {

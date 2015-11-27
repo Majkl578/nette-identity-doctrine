@@ -16,8 +16,6 @@ matrix:
     - php: hhvm
   include:
     - php: 5.6
-      env: NETTE_VERSION='2.1.*'
-    - php: 5.6
       env: NETTE_VERSION='2.2.*'
 
 
