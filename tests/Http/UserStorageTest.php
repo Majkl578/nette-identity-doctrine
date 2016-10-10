@@ -62,6 +62,8 @@ class UserStorageTest extends PHPUnit_Framework_TestCase
 	{
 		$this->databaseLoader->loadUserTableWithOneItem();
 		$userRepository = $this->entityManager->getRepository(self::ENTITY_IDENTITY);
+		$allMetadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
+		$this->entityManager->getProxyFactory()->generateProxyClasses($allMetadata);
 		$userProxy = $this->entityManager->getProxyFactory()->getProxy(self::ENTITY_IDENTITY, array('id' => 1));
 
 

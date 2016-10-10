@@ -19,7 +19,8 @@
 	"require-dev": {
 		"nette/bootstrap": "~2.2",
 	  	"nette/reflection": "~2.2",
-		"kdyby/doctrine": "~2.0",
+		"kdyby/doctrine": "dev-master",
+		"kdyby/events": "dev-master",
 		"tracy/tracy": "~2.2",
 		"phpunit/phpunit": "~4.8"
 	},
