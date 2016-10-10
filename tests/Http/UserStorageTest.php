@@ -13,6 +13,8 @@ use PHPUnit_Framework_TestCase;
 
 class UserStorageTest extends PHPUnit_Framework_TestCase
 {
+	const ENTITY_IDENTITY = 'Majkl578\NetteAddons\Doctrine2Identity\Tests\Entities\User';
+
 	/** @var Container */
 	private $container;
 
@@ -36,7 +38,7 @@ class UserStorageTest extends PHPUnit_Framework_TestCase
 	{
 		$this->userStorage = $this->container->getByType('Nette\Security\IUserStorage') ?:
 			$this->container->getService('nette.userStorage');
-		$this->entityManager = $this->container->getBytype('Doctrine\ORM\EntityManager');
+		$this->entityManager = $this->container->getByType('Doctrine\ORM\EntityManager');
 		$this->databaseLoader = $this->container->getByType('Majkl578\NetteAddons\Doctrine2Identity\Tests\DatabaseLoader');
 	}
 
@@ -56,10 +58,31 @@ class UserStorageTest extends PHPUnit_Framework_TestCase
 		$this->userStorage->setIdentity(new Identity(1));
 	}
 
+	public function testSetEntityProxyIdentity()
+	{
+		$this->databaseLoader->loadUserTableWithOneItem();
+		$userRepository = $this->entityManager->getRepository(self::ENTITY_IDENTITY);
+		$userProxy = $this->entityManager->getProxyFactory()->getProxy(self::ENTITY_IDENTITY, array('id' => 1));
+
+
+		$user = $userRepository->find(1);
+
+		$userStorage = $this->userStorage->setIdentity($userProxy);
+		$this->assertInstanceOf('Nette\Security\IUserStorage', $userStorage);
+		$this->assertInstanceOf('Majkl578\NetteAddons\Doctrine2Identity\Http\UserStorage', $userStorage);
+
+		$userIdentity = $userStorage->getIdentity();
+		$this->assertSame($user, $userIdentity);
+		$this->assertNotSame($userProxy, $userIdentity);
+		$this->assertSame(1, $userIdentity->getId());
+		$this->assertSame(array(), $userIdentity->getRoles());
+
+	}
+
 	public function testEntityIdentity()
 	{
 		$this->databaseLoader->loadUserTableWithOneItem();
-		$userRepository = $this->entityManager->getRepository('Majkl578\NetteAddons\Doctrine2Identity\Tests\Entities\User');
+		$userRepository = $this->entityManager->getRepository(self::ENTITY_IDENTITY);
 		$user = $userRepository->find(1);
 
 		$userStorage = $this->userStorage->setIdentity($user);

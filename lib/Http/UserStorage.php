@@ -2,6 +2,7 @@
 
 namespace Majkl578\NetteAddons\Doctrine2Identity\Http;
 
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Majkl578\NetteAddons\Doctrine2Identity\Security\FakeIdentity;
 use Nette\Http\Session;
@@ -30,7 +31,7 @@ class UserStorage extends NetteUserStorage
 	public function setIdentity(IIdentity $identity = NULL)
 	{
 		if ($identity !== NULL) {
-			$class = get_class($identity);
+			$class = ClassUtils::getClass($identity);
 
 			// we want to convert identity entities into fake identity
 			// so only the identifier fields are stored,
